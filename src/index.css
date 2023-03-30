@@ -5,6 +5,10 @@
   font-style: normal;
 }
 
+* {
+  font-family: 'SUIT-Regular', sans-serif;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'SUIT-Regular';
@@ -17,4 +21,10 @@ body {
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+a {
+  color: inherit;
+  font-weight: inherit;
+  text-decoration: none;
 }

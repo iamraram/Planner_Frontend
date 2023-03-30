@@ -23,6 +23,15 @@ const Parent = styled.div`
       opacity: 1;
     }
   }
+`;
+
+const Body = styled.div`
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-direction: column;
+  width: 400px;
+  height: 450px;
 `
 
 const Header = styled.div`
@@ -40,23 +49,10 @@ const Header = styled.div`
   }
 `
 
-const Title = styled.div`
-  color: #253746;
-  font-weight: 600;
-  font-size: 54px;
-`
-
-const Desc = styled.div`
-  color: #253746;
-  opacity: 0.5;
-  font-size: 18px;
-  cursor: pointer;
-  font-weight: 500;
-`
-
 const LoginParent = styled.div`
   display: flex;
   height: 120px;
+  margin-top: 20px;
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-start;
@@ -94,23 +90,42 @@ const Input = styled.input`
 
 `
 
-const TitleParent = styled.div`
-  width: 100%;
-  height: 100px;
+const BackBtn = styled.div`
+  color: #253746;
+  opacity: 0.5;
+  font-size: 30px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+`
+
+const MainParent = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  height: 130px;
 `
 
-const Body = styled.div`
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  flex-direction: column;
-  width: 390px;
-  height: 360px;
+const BackTxt = styled.div`
+  color: #253746;
+  opacity: 0.8;
+  font-size: 20px;
+  margin-left: 20px;
+  font-weight: 500;
 `
 
+const Title = styled.div`
+  color: #253746;
+  font-weight: 600;
+  font-size: 30px;
+  line-height: 150%;
+`
+
+const Desc = styled.div`
+  font-size: 18px;
+  color: #253746;
+  opacity: 0.5;
+`
 const Btn = styled.div`
   width: 136px;
   height: 52px;
@@ -129,13 +144,7 @@ const Btn = styled.div`
 const BtnParent = styled.div`
   display: flex;
   align-items: center;
-`
-
-const Signup = styled.div`
-  margin-left: 20px;
-  color: #253746;
-  opacity: 0.5;
-  cursor: pointer;
+  margin-top: 30px;
 `
 
 const Launch = () => {
@@ -145,20 +154,20 @@ const Launch = () => {
     event.preventDefault()
   }
 
-  const inspectValue = (email, password) => {
+  const inspectValue = (name, email) => {
     const emailIsValid = emailRegex.test(email);
-    const passwordIsValid = password.length >= 8;
-    SetInspect(emailIsValid && passwordIsValid);
+    const nameIsValid = name.length >= 2;
+    SetInspect(emailIsValid && nameIsValid);
   } 
+
+  const handleNameChange = (event) => {
+    SetUserName(event.target.value);
+    inspectValue(event.target.value, userId);
+  }
 
   const handleEmailChange = (event) => {
     SetUserId(event.target.value);
-    inspectValue(event.target.value, userPw);
-  }
-  
-  const handlePasswordChange = (event) => {
-    SetUserPw(event.target.value);
-    inspectValue(userId, event.target.value);
+    inspectValue(userName, event.target.value);
   }
 
   const handleBtnClick = () => {
@@ -168,35 +177,36 @@ const Launch = () => {
   }
 
   const [inspect, SetInspect] = useState(false)
+  const [userName, SetUserName] = useState('')
   const [userId, SetUserId] = useState('')
-  const [userPw, SetUserPw] = useState('')
 
   return (
     <>
       <Header/>
       <Parent>
         <Body draggable="true" onDragStart={handleDragStart}>
-          <TitleParent>
-            <Title>Planner</Title>
-            <Desc>갓생 살고 싶은 사람들의 모임, Planner</Desc>
-          </TitleParent>
+          <BackBtn>
+            <Link to="/">&lt;</Link>
+            <BackTxt>로그인</BackTxt>
+          </BackBtn>
+          <MainParent>
+            <Title>안녕하세요!<br/>Planner에 오신 것을 환영합니다.</Title>
+            <Desc>빠르게 가입하고 Planner를 이용해보세요.</Desc>
+          </MainParent>
           <LoginParent>
+            <LoginChild>
+              <Label>이름</Label>
+              <Input value={userName} onChange={handleNameChange} />
+            </LoginChild>
             <LoginChild>
               <Label>이메일</Label>
               <Input value={userId} onChange={handleEmailChange} />
             </LoginChild>
-            <LoginChild>
-              <Label>비밀번호</Label>
-              <Input value={userPw} onChange={handlePasswordChange} type={'password'} />
-            </LoginChild>
           </LoginParent>
           <BtnParent>
             <Btn color={inspect} onClick={handleBtnClick}>
-              로그인
+              다음
             </Btn>
-            <Signup>
-              <Link to="/register">처음 오셨나요?</Link>
-            </Signup>
           </BtnParent>
         </Body>
       </Parent>
