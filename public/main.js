@@ -4,7 +4,9 @@ const url = require('url');
 
 function createWindow() {
     const win = new BrowserWindow({
-        width: 1920, height: 1080
+        titleBarStyle: 'hiddenInset',
+        width: 1920, height: 1080,
+        minWidth: 620, minHeight: 810
     });
 
     /*
